@@ -1,0 +1,33 @@
+{
+    "rules": {
+        "no-irregular-whitespace": true,
+        "mocha-avoid-only": true,
+        "no-console": [true, "log", "warn", "debug", "time"],
+        "require-jsdoc": [false],
+        "quotemark": [false],
+        "whitespace": [
+            true,
+            "check-branch",
+            "check-operator",
+            "check-decl",
+            "check-type",
+            "check-module",
+            "check-typecast"
+        ],
+        "max-line-length": [false],
+        "jsx-alignment": false,
+        "jsdoc-format": false,
+        "no-string-throw": true,
+        "strict-boolean-expressions": false,
+        "no-unbound-method": false,
+        "prefer-function-over-method": false,
+        "await-promise": false,
+        "prefer-method-signature": false,
+        "no-useless-cast": false,
+        "restrict-plus-operands": false,
+        "no-duplicate-imports": true,
+        "no-inferred-empty-object-type": false,
+        "no-unused-variable": false,
+        "no-namespace": false
+    }
+}
