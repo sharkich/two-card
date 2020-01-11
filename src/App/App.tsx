@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Button, createStyles, Paper, Theme } from '@material-ui/core';
-import clsx from 'clsx';
+import AppDeck from '../components/AppDeck/AppDeck';
+import AppViewModel from './AppViewModel';
+import Table from '../interfaces/Table';
+import { Subscription } from 'rxjs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -12,23 +16,26 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     Header: {
       textAlign: 'center'
-    },
-    Deck: {
-      display: 'flex',
-      overflowX: 'auto',
-      justifyContent: 'center',
-      padding: theme.spacing(1)
-    },
-    Card: {},
-    CardSymbol: {
-      fontSize: '100pt',
-      textShadow: '2px 2px 2px red'
     }
   })
 );
 
-const App: React.FC = () => {
+const App: FunctionComponent = () => {
   const classes = useStyles();
+
+  const vmRef = useRef(new AppViewModel());
+
+  const [table, setTable] = useState<Table>(vmRef.current.currentTable);
+
+  useEffect(() => {
+    const vm = vmRef.current;
+    const subs: Subscription[] = [];
+    subs.push(vm.table$.subscribe(setTable));
+    return () => void subs.map(sub => sub.unsubscribe());
+  }, []);
+
+  console.log('table', table);
+
   return (
     <div className="App">
       <CssBaseline />
@@ -39,31 +46,9 @@ const App: React.FC = () => {
           </Button>
         </Paper>
 
-        <Paper className={clsx(classes.Paper, classes.Deck)}>
-          <div className={classes.Card}>
-            <span className={classes.CardSymbol}>🂡</span>
-          </div>
-          <div className={classes.Card}>
-            <span className={classes.CardSymbol}>🂡</span>
-          </div>
-          <div className={classes.Card}>
-            <span className={classes.CardSymbol}>🂡</span>
-          </div>
-          <div className={classes.Card}>
-            <span className={classes.CardSymbol}>🂡</span>
-          </div>
-          <div className={classes.Card}>
-            <span className={classes.CardSymbol}>🂡</span>
-          </div>
-          <div className={classes.Card}>
-            <span className={classes.CardSymbol}>🂡</span>
-          </div>
-          <div className={classes.Card}>
-            <span className={classes.CardSymbol}>🂡</span>
-          </div>
-        </Paper>
-
-        <Paper className={classes.Paper}>Deck #2</Paper>
+        {table.players.map((player, index) => (
+          <AppDeck deck={player.deck} key={'player' + index} />
+        ))}
       </Paper>
     </div>
   );
