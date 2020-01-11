@@ -6,7 +6,6 @@ import { Button, createStyles, Paper, Theme } from '@material-ui/core';
 import AppDeck from '../components/AppDeck/AppDeck';
 import AppViewModel from './AppViewModel';
 import Table from '../interfaces/Table';
-import { Subscription } from 'rxjs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,14 +28,8 @@ const App: FunctionComponent = () => {
 
   useEffect(() => {
     const vm = vmRef.current;
-    const subs: Subscription[] = [];
-    subs.push(
-      vm.table$.subscribe(table => {
-        console.log('new table', table);
-        setTable(table);
-      })
-    );
-    return () => void subs.map(sub => sub.unsubscribe());
+    const sub = vm.table$.subscribe(setTable);
+    return () => void sub.unsubscribe();
   }, []);
 
   return (
@@ -50,7 +43,7 @@ const App: FunctionComponent = () => {
         </Paper>
 
         {table.players.map((player, index) => (
-          <AppDeck deck={player.deck} key={'player' + index} />
+          <AppDeck player={player} key={'player' + index} />
         ))}
       </Paper>
     </div>

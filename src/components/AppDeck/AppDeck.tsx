@@ -4,6 +4,8 @@ import { createStyles, Paper, Theme } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import clsx from 'clsx';
 import AppCard from '../AppCard/AppCard';
+import Player from '../../interfaces/Player';
+import AppViewModel from '../../App/AppViewModel';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,15 +23,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  deck: Card[];
+  player: Player;
 }
 
-const AppDeck: FunctionComponent<Props> = ({ deck }: Props) => {
+const AppDeck: FunctionComponent<Props> = ({ player }: Props) => {
   const classes = useStyles();
   return (
     <Paper className={clsx(classes.Paper, classes.Deck)}>
-      {deck.map((card, index) => (
-        <AppCard card={card} key={'' + card.suit + card.power + index} />
+      {player.hand.map((card, index) => (
+        <AppCard
+          card={card}
+          key={'' + card.suit + card.power + index}
+          pairIndex={AppViewModel.pairIndex(player, card)}
+        />
       ))}
     </Paper>
   );

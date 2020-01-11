@@ -3,39 +3,53 @@ import clsx from 'clsx';
 import Card from '../../interfaces/Card';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { createStyles, Theme } from '@material-ui/core';
-import Suit from '../../interfaces/Suit';
+import AppViewModel from '../../App/AppViewModel';
+import { isSome, Option } from 'fp-ts/lib/Option';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     Card: {},
     CardSymbol: {
       fontSize: '100pt'
-      // textShadow: '2px 2px 2px red'
     },
     Black: {
       color: 'black'
     },
     Red: {
       color: 'red'
+    },
+    Pair1: {
+      textShadow: '2px 2px 2px blue'
+    },
+    Pair2: {
+      textShadow: '2px 2px 2px green'
+    },
+    Pair3: {
+      textShadow: '2px 2px 2px brown'
+    },
+    Pair4: {
+      textShadow: '2px 2px 2px purple'
     }
   })
 );
 
 interface Props {
   card: Card;
+  pairIndex: Option<number>;
 }
 
-const AppCard: FunctionComponent<Props> = ({ card }: Props) => {
+const AppCard: FunctionComponent<Props> = ({ card, pairIndex }: Props) => {
   const classes = useStyles();
-
-  const isBlackSuit = (suit: Suit) => [Suit.Spades, Suit.Clubs].includes(suit);
-  const isRedSuit = (suit: Suit) => [Suit.Hearts, Suit.Diamonds].includes(suit);
-
+  const isPair = (index: number) => isSome(pairIndex) && pairIndex.value === index;
   return (
     <div
       className={clsx(classes.Card, {
-        [classes.Black]: isBlackSuit(card.suit),
-        [classes.Red]: isRedSuit(card.suit)
+        [classes.Black]: AppViewModel.isBlackSuit(card.suit),
+        [classes.Red]: AppViewModel.isRedSuit(card.suit),
+        [classes.Pair1]: isPair(1),
+        [classes.Pair2]: isPair(2),
+        [classes.Pair3]: isPair(3),
+        [classes.Pair4]: isPair(4)
       })}
     >
       <span className={classes.CardSymbol}>{card.symbol}</span>
