@@ -8,19 +8,23 @@ import game from '../models/Game';
 import Suit from '../interfaces/Suit';
 import Card from '../interfaces/Card';
 
+const DEFAULT_PLAYERS_COUNT = 2;
+const MAX_PLAYERS_COUNT = 4;
+const CARDS_IN_HAND = 7;
+
 export const DEFAULT_TABLE: Table = {
   winners: [],
+  seats: DEFAULT_PLAYERS_COUNT,
   players: [],
-  deck: []
+  deck: [],
+  canAddPlayer: true,
+  canRemovePlayer: false
 };
 
 const DEFAULT_PLAYER: Player = {
   hand: [],
   pairs: []
 };
-
-const DEFAULT_PLAYERS_COUNT = 2;
-const CARDS_IN_HAND = 7;
 
 class AppViewModel {
   static isBlackSuit(suit: Suit): boolean {
@@ -44,7 +48,7 @@ class AppViewModel {
       : none;
   }
 
-  private table: Table = this.generate();
+  private table: Table = { ...DEFAULT_TABLE };
   public readonly table$ = new BehaviorSubject<Table>(this.table);
 
   get currentTable(): Table {
@@ -56,10 +60,20 @@ class AppViewModel {
     this.table$.next(this.table);
   }
 
+  public addSeat() {
+    this.table.seats++;
+    this.deal();
+  }
+
+  public removeSeat() {
+    this.table.seats--;
+    this.deal();
+  }
+
   private generate(): Table {
-    const table: Table = { ...DEFAULT_TABLE };
+    const table: Table = { ...this.table };
     table.deck = game.getDeck();
-    table.players = new Array(DEFAULT_PLAYERS_COUNT).fill({}).reduce(prev => {
+    table.players = new Array(this.table.seats).fill({}).reduce(prev => {
       const player = { ...DEFAULT_PLAYER };
       player.hand = fill(Array(CARDS_IN_HAND), {}).map(() => defined(table.deck.shift()));
       player.pairs = game.getPairs(player.hand);
@@ -67,6 +81,8 @@ class AppViewModel {
       return prev;
     }, []);
     table.winners = game.getWinner(table.players);
+    table.canAddPlayer = this.table.seats < MAX_PLAYERS_COUNT;
+    table.canRemovePlayer = this.table.seats > DEFAULT_PLAYERS_COUNT;
     return table;
   }
 }

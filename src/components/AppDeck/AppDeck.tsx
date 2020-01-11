@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { createStyles, Paper, Theme } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import clsx from 'clsx';
 import AppCard from '../AppCard/AppCard';
 import Player from '../../interfaces/Player';
 import AppViewModel from '../../App/AppViewModel';

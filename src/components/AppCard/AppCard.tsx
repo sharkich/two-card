@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1)
     },
     CardSymbol: {
-      fontSize: '100pt'
+      fontSize: '130pt'
     },
     Black: {
       color: 'black'

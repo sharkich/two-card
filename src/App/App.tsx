@@ -13,8 +13,11 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
       padding: theme.spacing(3, 2)
     },
-    Header: {
+    Center: {
       textAlign: 'center'
+    },
+    Button: {
+      margin: theme.spacing(1, 2)
     }
   })
 );
@@ -29,18 +32,36 @@ const App: FunctionComponent = () => {
   useEffect(() => {
     const vm = vmRef.current;
     const sub = vm.table$.subscribe(setTable);
+    vm.deal();
     return () => void sub.unsubscribe();
   }, []);
 
   const isWinner = (index: number) => table.winners.includes(index);
 
+  const vm = vmRef.current;
   return (
     <div className="App">
       <CssBaseline />
       <Paper className={classes.Paper}>
-        <Paper className={clsx(classes.Paper, classes.Header)}>
-          <Button variant="contained" color="primary" onClick={() => vmRef.current.deal()}>
+        <Paper className={clsx(classes.Paper, classes.Center)}>
+          <Button variant="contained" color="primary" onClick={() => vm.deal()} className={classes.Button}>
             Deal
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => vm.addSeat()}
+            className={classes.Button}
+            disabled={!table.canAddPlayer}
+          >
+            Add Player
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => vm.removeSeat()}
+            className={classes.Button}
+            disabled={!table.canRemovePlayer}
+          >
+            Remove Player
           </Button>
         </Paper>
 
