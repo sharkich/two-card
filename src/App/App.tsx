@@ -30,11 +30,14 @@ const App: FunctionComponent = () => {
   useEffect(() => {
     const vm = vmRef.current;
     const subs: Subscription[] = [];
-    subs.push(vm.table$.subscribe(setTable));
+    subs.push(
+      vm.table$.subscribe(table => {
+        console.log('new table', table);
+        setTable(table);
+      })
+    );
     return () => void subs.map(sub => sub.unsubscribe());
   }, []);
-
-  console.log('table', table);
 
   return (
     <div className="App">

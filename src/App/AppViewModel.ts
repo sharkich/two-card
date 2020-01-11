@@ -2,7 +2,7 @@ import Table from '../interfaces/Table';
 import { BehaviorSubject } from 'rxjs';
 import { none } from 'fp-ts/lib/Option';
 import CARDS from '../models/CARDS';
-import { shuffle } from 'lodash';
+import { shuffle, fill } from 'lodash';
 import Player from '../interfaces/Player';
 import defined from '../utils/defined';
 
@@ -27,12 +27,12 @@ class AppViewModel {
   private generate(): Table {
     const table: Table = { ...DEFAULT_TABLE };
     table.deck = shuffle([...CARDS]);
-    table.players = new Array(DEFAULT_PLAYERS_COUNT).fill({ ...DEFAULT_PLAYER });
-    table.players.map(player => {
-      player.deck = new Array(CARDS_IN_HAND).fill({}).map(() => defined(table.deck.shift()));
-      console.log('player', player);
-      console.log('deck', table.deck);
-    });
+    table.players = new Array(DEFAULT_PLAYERS_COUNT).fill({}).reduce(prev => {
+      const player = { ...DEFAULT_PLAYER };
+      player.deck = fill(Array(CARDS_IN_HAND), {}).map(() => defined(table.deck.shift()));
+      prev.push(player);
+      return prev;
+    }, []);
     return table;
   }
 
