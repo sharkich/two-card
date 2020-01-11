@@ -37,7 +37,7 @@ const App: FunctionComponent = () => {
       <CssBaseline />
       <Paper className={classes.Paper}>
         <Paper className={clsx(classes.Paper, classes.Header)}>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={() => vmRef.current.deal()}>
             Deal
           </Button>
         </Paper>

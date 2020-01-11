@@ -8,7 +8,9 @@ import { isSome, Option } from 'fp-ts/lib/Option';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    Card: {},
+    Card: {
+      margin: theme.spacing(1)
+    },
     CardSymbol: {
       fontSize: '100pt'
     },
@@ -19,16 +21,20 @@ const useStyles = makeStyles((theme: Theme) =>
       color: 'red'
     },
     Pair1: {
-      textShadow: '2px 2px 2px blue'
+      border: '1px solid blue',
+      boxShadow: '2px 2px 2px blue'
     },
     Pair2: {
-      textShadow: '2px 2px 2px green'
+      border: '1px solid green',
+      boxShadow: '2px 2px 2px green'
     },
     Pair3: {
-      textShadow: '2px 2px 2px brown'
+      border: '1px solid brown',
+      boxShadow: '2px 2px 2px brown'
     },
     Pair4: {
-      textShadow: '2px 2px 2px purple'
+      border: '1px solid purple',
+      boxShadow: '2px 2px 2px purple'
     }
   })
 );
