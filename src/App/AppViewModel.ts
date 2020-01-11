@@ -9,7 +9,7 @@ import Suit from '../interfaces/Suit';
 import Card from '../interfaces/Card';
 
 export const DEFAULT_TABLE: Table = {
-  winner: none,
+  winners: [],
   players: [],
   deck: []
 };
@@ -66,6 +66,7 @@ class AppViewModel {
       prev.push(player);
       return prev;
     }, []);
+    table.winners = game.getWinner(table.players);
     return table;
   }
 }

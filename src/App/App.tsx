@@ -32,6 +32,8 @@ const App: FunctionComponent = () => {
     return () => void sub.unsubscribe();
   }, []);
 
+  const isWinner = (index: number) => table.winners.includes(index);
+
   return (
     <div className="App">
       <CssBaseline />
@@ -43,7 +45,9 @@ const App: FunctionComponent = () => {
         </Paper>
 
         {table.players.map((player, index) => (
-          <AppDeck player={player} key={'player' + index} />
+          <>
+            <AppDeck player={player} isWinner={isWinner(index)} key={'player' + index} />
+          </>
         ))}
       </Paper>
     </div>

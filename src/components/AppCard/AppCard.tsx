@@ -29,10 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
       boxShadow: '2px 2px 2px green'
     },
     Pair3: {
-      border: '1px solid brown',
-      boxShadow: '2px 2px 2px brown'
-    },
-    Pair4: {
       border: '1px solid purple',
       boxShadow: '2px 2px 2px purple'
     }
@@ -54,8 +50,7 @@ const AppCard: FunctionComponent<Props> = ({ card, pairIndex }: Props) => {
         [classes.Red]: AppViewModel.isRedSuit(card.suit),
         [classes.Pair1]: isPair(1),
         [classes.Pair2]: isPair(2),
-        [classes.Pair3]: isPair(3),
-        [classes.Pair4]: isPair(4)
+        [classes.Pair3]: isPair(3)
       })}
     >
       <span className={classes.CardSymbol}>{card.symbol}</span>

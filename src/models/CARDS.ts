@@ -23,9 +23,9 @@ const CARDS: Card[] = [
   { symbol: '🃕', power: 5, suit: Suit.Clubs },
 
   { symbol: '🂦', power: 6, suit: Suit.Spades },
-  { symbol: '🂷', power: 6, suit: Suit.Hearts },
-  { symbol: '🃇', power: 6, suit: Suit.Diamonds },
-  { symbol: '🃗', power: 6, suit: Suit.Clubs },
+  { symbol: '🂶', power: 6, suit: Suit.Hearts },
+  { symbol: '🃆', power: 6, suit: Suit.Diamonds },
+  { symbol: '🃖', power: 6, suit: Suit.Clubs },
 
   { symbol: '🂧', power: 7, suit: Suit.Spades },
   { symbol: '🂷', power: 7, suit: Suit.Hearts },
