@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import React, { FunctionComponent, Fragment, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -66,9 +66,9 @@ const App: FunctionComponent = () => {
         </Paper>
 
         {table.players.map((player, index) => (
-          <>
-            <AppDeck player={player} isWinner={isWinner(index)} key={'player' + index} />
-          </>
+          <Fragment key={'player' + index}>
+            <AppDeck player={player} isWinner={isWinner(index)} />
+          </Fragment>
         ))}
       </Paper>
     </div>
