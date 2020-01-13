@@ -17,7 +17,7 @@ describe('getPairs', () => {
   });
 
   test('Should return correct with three the same cards', () => {
-    expect(game.getPairs([CARDS[0], CARDS[1], CARDS[2]])).toEqual([[CARDS[0], CARDS[1], CARDS[2]]]);
+    expect(game.getPairs([CARDS[0], CARDS[1], CARDS[2]])).toEqual([[CARDS[0], CARDS[1]]]);
   });
 
   test('Should return correct with two pairs', () => {
@@ -28,12 +28,17 @@ describe('getPairs', () => {
   });
 
   test('Should return correct with three pairs', () => {
-    expect(
-      game.getPairs([CARDS[15], CARDS[0], CARDS[1], CARDS[10], CARDS[20], CARDS[21], CARDS[30], CARDS[31]])
-    ).toEqual([
+    expect(game.getPairs([CARDS[0], CARDS[1], CARDS[10], CARDS[20], CARDS[21], CARDS[30], CARDS[31]])).toEqual([
       [CARDS[0], CARDS[1]],
       [CARDS[20], CARDS[21]],
       [CARDS[30], CARDS[31]]
+    ]);
+  });
+
+  test('Should return correct with two equal pairs', () => {
+    expect(game.getPairs([CARDS[15], CARDS[4], CARDS[5], CARDS[10], CARDS[6], CARDS[21], CARDS[7]])).toEqual([
+      [CARDS[4], CARDS[5]],
+      [CARDS[6], CARDS[7]]
     ]);
   });
 });

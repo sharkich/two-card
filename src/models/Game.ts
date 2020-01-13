@@ -13,11 +13,12 @@ class Game {
     const pairs: Card[][] = [];
     let deck = [...cards];
     while (deck.length) {
-      let card: Card = defined(deck.shift());
-      const pair: Card[] = [card, ...deck.filter(c => c.power === card.power)];
-      deck = deck.filter(c => c.power !== card.power);
-      if (pair.length > 1) {
+      const card: Card = defined(deck.shift());
+      const pairIndex = deck.findIndex(c => c.power === card.power);
+      if (pairIndex !== -1) {
+        const pair: Card[] = [card, deck[pairIndex]];
         pairs.push(pair);
+        deck.splice(pairIndex, 1);
       }
     }
     return pairs;
